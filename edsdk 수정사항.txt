@@ -1,0 +1,14 @@
+수정사항
+
+파일분리하였음
+클래스의 멤버변수를 private으로 변경
+클래스의 멤버변수 초기화를 생성자로 이동
+edsdkInit()을 Camera 클래스의 생성자로 대체
+
+
+요구사항
+
+메인문에서는 EDSDK 관련 타입이나 함수 직접 부르지 않도록 해주세요
+촬영 트리거를 runLive에서 따로 떼어내고 함수로 만들어주세요
+카메라클래스에서 변수에 직접 접근하지 않도록 getter setter 만들어주세요
+downloadImage, handleObjectEvent, handleObjectEvent2, recordStartAll, getNowTime 함수가 카메라클래스와 엉켜있는데 한군데(카메라 클래스 혹은 메인소스)로 명확히 해주세요
