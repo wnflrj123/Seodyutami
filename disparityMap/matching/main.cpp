@@ -12,7 +12,7 @@ void showImageAndStop(IplImage* image) {
 int main() {
 	const std::string leftImagePath = "tsukuba_l.png";
 	const std::string rightImagePath = "tsukuba_r.png";
-	DisparityMapMaker maker(leftImagePath, rightImagePath, 3, 16, new SSDtype());
+	DisparityMapMaker maker(leftImagePath, rightImagePath, 3, 16, new SIMDintrinsicSSDtype());
 
 	TimePrinter time;
 	IplImage* disparityMap(maker.getDisparitMapPtr());

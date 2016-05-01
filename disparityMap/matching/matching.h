@@ -67,6 +67,18 @@ struct NCCtype :public IEstimationType {
 	}
 };
 
+class SIMDintrinsicSSDtype :public IEstimationType {
+public:
+	inline long long int getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
+
+		__m128i* leftImagePtr = (__m128i*)(leftImage->imageData + y*leftImage->widthStep + x);
+		__m128i* rightImagePtr = (__m128i*)(rightImage->imageData + y*rightImage->widthStep + (x + d));
+
+		__m128i xmmImage = _mm_sad_epu8(_mm_loadu_si128((leftImagePtr)), _mm_loadu_si128((rightImagePtr)));
+		return _mm_extract_epi16(xmmImage, 0) + _mm_extract_epi16(xmmImage, 4);
+	}
+};
+
 class DisparityMapMaker {
 public:
 	DisparityMapMaker(const std::string leftImagePath, const std::string rightImagePath, const int& windowSize, const int& dRange, IEstimationType* type);
@@ -74,7 +86,7 @@ public:
 	IplImage* getDisparitMapPtr();
 
 private:
-	const std::shared_ptr<IEstimationType> pEstimationType;
+	const std::unique_ptr<IEstimationType> pEstimationType;
 	IplImage* leftImage;
 	IplImage* rightImage;
 	IplImage* disparityMap;
