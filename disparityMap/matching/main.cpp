@@ -17,7 +17,7 @@ int main() {
 	DisparityMapMaker maker(leftImagePath, rightImagePath, 3, 16, new SIMDintrinsicSSDtype());
 
 	TimePrinter time;
-	IplImage* disparityMap(maker.getDisparitMapPtr());
+	IplImage* disparityMap(maker.getDisparityMapPtr());
 	time.end();
 
 	cvSaveImage("matching.png", disparityMap);
