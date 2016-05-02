@@ -2,7 +2,7 @@
 #include <string>
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
-#include "matching.h"
+#include "disparityMapMaker.h"
 #include "timePrinter.h"
 
 void showImageAndStop(IplImage* image) {
