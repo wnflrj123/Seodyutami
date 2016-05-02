@@ -1,5 +1,5 @@
-#ifndef MATCHING_H
-#define MATCHING_H
+#ifndef SEODYUTAMI_DISPARITYMAP_MATCHING_MATCHING_H
+#define SEODYUTAMI_DISPARITYMAP_MATCHING_MATCHING_H
 
 #include <iostream>
 #include <string>
