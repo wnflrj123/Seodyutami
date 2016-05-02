@@ -1,3 +1,6 @@
+#include <iostream>
+#include <opencv\highgui.h>
+#include <omp.h>
 #include "matching.h"
 
 DisparityMapMaker::DisparityMapMaker(const std::string leftImagePath, const std::string rightImagePath, const int& windowSize, const int& dRange, IEstimationType* type)
