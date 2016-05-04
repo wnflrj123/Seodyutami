@@ -11,3 +11,7 @@ DisparityMapMaker::DisparityMapMaker(const std::string leftImagePath, const std:
 IplImage* DisparityMapMaker::getDisparityMapPtr() {
 	return pImpl->getDisparityMapPtr();
 }
+
+void DisparityMapMaker::deleteMap() {
+	pImpl->deleteMap();
+}

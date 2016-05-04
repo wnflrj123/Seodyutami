@@ -12,6 +12,7 @@ class DisparityMapMaker {
 public:
 	DisparityMapMaker(const std::string leftImagePath, const std::string rightImagePath, const int& windowSize, const int& dRange, IEstimationType* type);
 	IplImage* getDisparityMapPtr();
+	void deleteMap();
 
 private:
 	const std::shared_ptr<DisparityMapMakerImpl> pImpl;

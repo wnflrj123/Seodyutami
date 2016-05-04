@@ -9,7 +9,8 @@ leftImage(cvLoadImage(leftImagePath.c_str(), 0)),
 rightImage(cvLoadImage(rightImagePath.c_str(), 0)),
 disparityMap(cvCreateImage(cvSize(leftImage->width, leftImage->height), IPL_DEPTH_8U, 1)),
 windowSize(windowSize),
-dRange(dRange) {
+dRange(dRange),
+isMapDeleted(false) {
 	if (!isSameImageSize()) {
 		//이렇게 소멸된 객체는 어떻게 되는거지??? 정상적인 동작을 하는걸까?
 		//아예 생성자가 정상적으로 마쳐지지 않도록 예외처리를 해주는게 어떨까.
@@ -21,7 +22,7 @@ DisparityMapMakerImpl::~DisparityMapMakerImpl() {
 	//cvReleaseImage 에서 예외가 발생하면??
 	if (leftImage) cvReleaseImage(&leftImage);
 	if (rightImage) cvReleaseImage(&rightImage);
-	if (disparityMap) cvReleaseImage(&disparityMap);
+	if (disparityMap && !isMapDeleted) cvReleaseImage(&disparityMap);
 }
 
 IplImage* DisparityMapMakerImpl::getDisparityMapPtr() {
@@ -38,6 +39,13 @@ IplImage* DisparityMapMakerImpl::getDisparityMapPtr() {
 	}
 
 	return disparityMap;
+}
+
+void DisparityMapMakerImpl::deleteMap() {
+	if (disparityMap && !isMapDeleted) {
+		cvReleaseImage(&disparityMap);
+		isMapDeleted = true;
+	}
 }
 
 long long int DisparityMapMakerImpl::getDisparityValue(const int& x, const int& y) {

@@ -40,13 +40,13 @@ long long int NCCtype::getValue(IplImage* leftImage, IplImage* rightImage, int x
 
 		for (int j = -windowSize; j < windowSize; j++) {
 			num += (long long int)(leftImagePtr[x + j] * rightImagePtr[x + j + d]);
-			denA += (long long int)leftImagePtr[x + j] * leftImagePtr[x + j];
-			denB += (long long int)rightImagePtr[x + j + d] * rightImagePtr[x + j + d];
+			denA += (long long int)(leftImagePtr[x + j] * leftImagePtr[x + j]);
+			denB += (long long int)(rightImagePtr[x + j + d] * rightImagePtr[x + j + d]);
 		}
 	}
 	NCC = (float)(num * num) / denA / denB;
 
-	return (long long int)(NCC * 10);
+	return (long long int)(100000 - NCC * 100000);
 }
 
 long long int SIMDintrinsicSSDtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {

@@ -11,6 +11,7 @@ public:
 	DisparityMapMakerImpl(const std::string leftImagePath, const std::string rightImagePath, const int& windowSize, const int& dRange, IEstimationType* type);
 	~DisparityMapMakerImpl();
 	IplImage* getDisparityMapPtr();
+	void deleteMap();
 
 private:
 	const std::unique_ptr<IEstimationType> pEstimationType;
@@ -19,6 +20,7 @@ private:
 	IplImage* disparityMap;
 	int windowSize;
 	int dRange;
+	bool isMapDeleted;
 
 	long long int getDisparityValue(const int& x, const int& y);
 	bool isSameImageSize();

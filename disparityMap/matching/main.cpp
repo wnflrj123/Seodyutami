@@ -14,7 +14,7 @@ void showImageAndStop(IplImage* image) {
 int main() {
 	const std::string leftImagePath = "tsukuba_l.png";
 	const std::string rightImagePath = "tsukuba_r.png";
-	DisparityMapMaker maker(leftImagePath, rightImagePath, 3, 16, new SIMDintrinsicSSDtype());
+	DisparityMapMaker maker(leftImagePath, rightImagePath, 8, 16, new NCCtype());
 
 	TimePrinter time;
 	IplImage* disparityMap(maker.getDisparityMapPtr());
@@ -22,6 +22,7 @@ int main() {
 
 	cvSaveImage("matching.png", disparityMap);
 	showImageAndStop(disparityMap);
+	maker.deleteMap();
 
 	return 0;
 }
