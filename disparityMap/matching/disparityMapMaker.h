@@ -14,7 +14,7 @@ public:
 	IplImage* getDisparityMapPtr();
 
 private:
-	const std::unique_ptr<DisparityMapMakerImpl> pImpl;
+	const std::shared_ptr<DisparityMapMakerImpl> pImpl;
 };
 
 #endif
