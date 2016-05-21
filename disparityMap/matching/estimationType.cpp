@@ -1,6 +1,6 @@
 #include "estimationType.h"
 
-long long int SADtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
+long long int SADtype::getValue(const IplImage* leftImage, const IplImage* rightImage, int x, int y, int windowSize, int d) const {
 	long long int SAD = 0;
 	for (int i = -windowSize; i < windowSize; i++) {
 		uchar* leftImagePtr = (uchar*)(leftImage->imageData + (y + i)*leftImage->widthStep);
@@ -18,7 +18,7 @@ SADtype* SADtype::getInstance() {
 	return new SADtype();
 }
 
-long long int SSDtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
+long long int SSDtype::getValue(const IplImage* leftImage, const IplImage* rightImage, int x, int y, int windowSize, int d) const {
 	long long int SSD = 0;
 	for (int i = -windowSize; i < windowSize; i++) {
 		uchar* leftImagePtr = (uchar*)(leftImage->imageData + (y + i)*leftImage->widthStep);
@@ -37,7 +37,7 @@ SSDtype* SSDtype::getInstance() {
 	return new SSDtype();
 }
 
-long long int NCCtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
+long long int NCCtype::getValue(const IplImage* leftImage, const IplImage* rightImage, int x, int y, int windowSize, int d) const {
 	long long int num = 0;
 	long long int denA = 0;
 	long long int denB = 0;
@@ -61,7 +61,7 @@ NCCtype* NCCtype::getInstance() {
 	return new NCCtype();
 }
 
-long long int SIMDintrinsicSSDtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
+long long int SIMDintrinsicSSDtype::getValue(const IplImage* leftImage, const IplImage* rightImage, int x, int y, int windowSize, int d) const {
 
 	__m128i* leftImagePtr = (__m128i*)(leftImage->imageData + y*leftImage->widthStep + x);
 	__m128i* rightImagePtr = (__m128i*)(rightImage->imageData + y*rightImage->widthStep + (x + d));

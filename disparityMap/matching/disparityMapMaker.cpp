@@ -4,14 +4,10 @@
 #include "disparityMapMaker.h"
 #include "disparityMapMakerImpl.h"
 
-DisparityMapMaker::DisparityMapMaker(const std::string leftImagePath, const std::string rightImagePath, const int& windowSize, const int& dRange, IEstimationType* type) 
-:pImpl(new DisparityMapMakerImpl(leftImagePath, rightImagePath, windowSize, dRange, type))
+DisparityMapMaker::DisparityMapMaker(const int& windowSize, const int& dRange, IEstimationType* type) 
+:pImpl(new DisparityMapMakerImpl(windowSize, dRange, type))
 {}
 
-IplImage* DisparityMapMaker::getDisparityMapPtr() {
-	return pImpl->getDisparityMapPtr();
-}
-
-void DisparityMapMaker::deleteMap() {
-	pImpl->deleteMap();
+std::shared_ptr<IplImage> DisparityMapMaker::getDisparityMapPtr(const IplImage* leftGrayImage, const IplImage* rightGrayImage) {
+	return pImpl->getDisparityMapPtr(leftGrayImage, rightGrayImage);
 }
