@@ -17,15 +17,16 @@ int main() {
 	IplImage* rightGrayImage = cvLoadImage("tsukuba_r.png", 0);
 
 	DisparityMapMaker disparityMapMaker(8, 16, SIMDintrinsicSSDtype::getInstance());
-	SegmentMarkersMaker segmentMarkersMaker;
+	SegmentMarkersMaker segmentMarkersMaker(10);
 
 	TimePrinter time;
 	std::shared_ptr<IplImage> disparityMap(disparityMapMaker.getDisparityMapPtr(leftGrayImage, rightGrayImage));
-	std::shared_ptr<CvMat> segmentMarkers(segmentMarkersMaker.getSegmentMarkers(leftColorImage, 10));
+	std::shared_ptr<CvMat> segmentMarkers(segmentMarkersMaker.getSegmentMarkers(leftColorImage));
+	std::shared_ptr<IplImage> segmentedDisparityMap(segmentMarkersMaker.getSegmentedDisparityMap(disparityMap.get(), segmentMarkers.get()));
 	time.end();
 
 	cvSaveImage("matching.png", disparityMap.get());
-	showImageAndStop(disparityMap.get());
+	showImageAndStop(segmentedDisparityMap.get());
 	
 	return 0;
 }

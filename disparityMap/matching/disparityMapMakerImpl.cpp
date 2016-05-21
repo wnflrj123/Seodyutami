@@ -1,10 +1,7 @@
 #include <iostream>
 #include <omp.h>
 #include "DisparityMapMakerImpl.h"
-
-void releaseImageForSharedPtr(IplImage* image) {
-	cvReleaseImage(&image);
-}
+#include "opencvReleaseFunctions.h"
 
 DisparityMapMakerImpl::DisparityMapMakerImpl(const int& windowSize, const int& dRange, IEstimationType* type)
 : pEstimationType(type), windowSize(windowSize), dRange(dRange) {
@@ -46,13 +43,4 @@ long long int DisparityMapMakerImpl::getDisparityValue(const IplImage* leftGrayI
 	}
 
 	return disparity;
-}
-
-bool DisparityMapMakerImpl::isSameImageSize(const IplImage* leftGrayImage, const IplImage* rightGrayImage) {
-	if ((leftGrayImage->height != rightGrayImage->height) || (leftGrayImage->width != rightGrayImage->width)) {
-		std::cout << "Left and Right image must have a same ->" << std::endl;
-		return false;
-	}
-
-	return true;
 }

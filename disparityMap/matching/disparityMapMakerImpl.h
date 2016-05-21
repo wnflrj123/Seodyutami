@@ -17,7 +17,6 @@ private:
 	int dRange;
 
 	long long int getDisparityValue(const IplImage* leftGrayImage, const IplImage* rightGrayImage, const int& x, const int& y);
-	bool isSameImageSize(const IplImage* leftGrayImage, const IplImage* rightGrayImage);
 };
 
 #endif
