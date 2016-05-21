@@ -14,6 +14,10 @@ long long int SADtype::getValue(IplImage* leftImage, IplImage* rightImage, int x
 	return SAD;
 }
 
+SADtype* SADtype::getInstance() {
+	return new SADtype();
+}
+
 long long int SSDtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
 	long long int SSD = 0;
 	for (int i = -windowSize; i < windowSize; i++) {
@@ -27,6 +31,10 @@ long long int SSDtype::getValue(IplImage* leftImage, IplImage* rightImage, int x
 	}
 
 	return SSD;
+}
+
+SSDtype* SSDtype::getInstance() {
+	return new SSDtype();
 }
 
 long long int NCCtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
@@ -49,6 +57,10 @@ long long int NCCtype::getValue(IplImage* leftImage, IplImage* rightImage, int x
 	return (long long int)(100000 - NCC * 100000);
 }
 
+NCCtype* NCCtype::getInstance() {
+	return new NCCtype();
+}
+
 long long int SIMDintrinsicSSDtype::getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d) {
 
 	__m128i* leftImagePtr = (__m128i*)(leftImage->imageData + y*leftImage->widthStep + x);
@@ -56,4 +68,8 @@ long long int SIMDintrinsicSSDtype::getValue(IplImage* leftImage, IplImage* righ
 
 	__m128i xmmImage = _mm_sad_epu8(_mm_loadu_si128((leftImagePtr)), _mm_loadu_si128((rightImagePtr)));
 	return _mm_extract_epi16(xmmImage, 0) + _mm_extract_epi16(xmmImage, 4);
+}
+
+SIMDintrinsicSSDtype* SIMDintrinsicSSDtype::getInstance() {
+	return new SIMDintrinsicSSDtype();
 }

@@ -13,18 +13,22 @@ interface IEstimationType : private Empty{
 
 interface SADtype :public IEstimationType {
 	long long int getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d);
+	static SADtype* getInstance();
 };
 
 interface SSDtype :public IEstimationType {
 	long long int getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d);
+	static SSDtype* getInstance();
 };
 
 interface NCCtype :public IEstimationType {
 	long long int getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d);
+	static NCCtype* getInstance();
 };
 
 interface SIMDintrinsicSSDtype :public IEstimationType {
 	long long int getValue(IplImage* leftImage, IplImage* rightImage, int x, int y, int windowSize, int d);
+	static SIMDintrinsicSSDtype* getInstance();
 };
 
 #endif
