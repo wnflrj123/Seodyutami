@@ -1,27 +1,32 @@
 #include <iostream>
-#include <string>
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
 #include "disparityMapMaker.h"
 #include "timePrinter.h"
+#include "segmentMarkersMaker.h"
 
 void showImageAndStop(IplImage* image) {
-	cvShowImage("SSD test", image);
+	cvShowImage("test", image);
 	cvWaitKey(0);
-	cvDestroyWindow("SSD test");
+	cvDestroyWindow("test");
 }
 
 int main() {
-	const std::string leftImagePath = "tsukuba_l.png";
-	const std::string rightImagePath = "tsukuba_r.png";
-	DisparityMapMaker maker(leftImagePath, rightImagePath, 3, 16, new SIMDintrinsicSSDtype());
+	IplImage* leftGrayImage = cvLoadImage("tsukuba_l.png", 0);
+	IplImage* leftColorImage = cvLoadImage("tsukuba_l.png", 1);
+	IplImage* rightGrayImage = cvLoadImage("tsukuba_r.png", 0);
+
+	DisparityMapMaker disparityMapMaker(2, 16, SSDtype::getInstance());
+	SegmentMarkersMaker segmentMarkersMaker(8);
 
 	TimePrinter time;
-	IplImage* disparityMap(maker.getDisparityMapPtr());
+	std::shared_ptr<IplImage> disparityMap(disparityMapMaker.getDisparityMapPtr(leftGrayImage, rightGrayImage));
+	std::shared_ptr<CvMat> segmentMarkers(segmentMarkersMaker.getSegmentMarkers(leftColorImage));
+	disparityMap = segmentMarkersMaker.getSegmentedDisparityMap(disparityMap.get(), segmentMarkers.get());
 	time.end();
 
-	cvSaveImage("matching.png", disparityMap);
-	showImageAndStop(disparityMap);
-
+	cvSaveImage("matching.png", disparityMap.get());
+	showImageAndStop(disparityMap.get());
+	
 	return 0;
 }
